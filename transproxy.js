@@ -54,6 +54,7 @@ if(cluster.isMaster){
 			conf.allowAddress != null && !conf.allowAddress.some(addr => addr == origDest.host)
 		){
 			console.log("NG", route);
+			close();
 			return;
 		}
 		

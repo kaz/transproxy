@@ -12,19 +12,19 @@ npm i -g transproxy
 
 ## launch
 
-### listen on specified port
+#### listen on specified port
 
 ```
 transproxy '{"listen":14514}'
 ```
 
-### allow only http(s)
+#### allow only http(s)
 
 ```
 transproxy '{"allowPorts":[80,443]}'
 ```
 
-### allow specific server
+#### allow specific server
 
 ```
 transproxy '{"allowAddress":["8.8.8.8"]}'
@@ -34,8 +34,7 @@ transproxy '{"allowAddress":["8.8.8.8"]}'
 
 ```
 iptables -t nat -F
-iptables -t nat -A PREROUTING -i eth0 -p tcp --dport  80 -j REDIRECT --to-port 14514
-iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 443 -j REDIRECT --to-port 14514
+iptables -t nat -A PREROUTING -i eth0 -p tcp -j REDIRECT --to-port 14514
 ```
 
 ## as a service
@@ -48,7 +47,7 @@ After=syslog.target network.target
 [Service]
 Type=simple
 Restart=always
-ExecStart=/usr/bin/transproxy
+ExecStart=/usr/bin/transproxy '{"listen":14514,"allowPorts":[80,443]}'
 
 [Install]
 WantedBy=multi-user.target
