@@ -2,6 +2,20 @@
 
 TCP transparent proxy
 
+[![NPM](https://nodei.co/npm/transproxy.png?compact=true)](https://nodei.co/npm/transproxy/)
+
+## install
+
+```
+npm i -g transproxy
+```
+
+## launch
+
+```
+transproxy
+```
+
 ## routing
 
 ```
@@ -20,7 +34,7 @@ After=syslog.target network.target
 [Service]
 Type=simple
 Restart=always
-ExecStart=transproxy
+ExecStart=/usr/bin/transproxy
 
 [Install]
 WantedBy=multi-user.target

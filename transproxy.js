@@ -14,7 +14,7 @@ if(cluster.isMaster){
 	}
 }else{
 	net.createServer(src => {
-		const dst = net.connect(original(src), function(){
+		const dst = net.connect(original(src), _ => {
 			const close = _ => {
 				src.end();
 				dst.end();
