@@ -31,39 +31,25 @@ if(cluster.isMaster){
 	}
 }else{
 	net.createServer(src => {
-		let dst;
-		
-		const close = _ => {
-			if(src instanceof net.Socket){
-				src.destroy();
-			}
-			if(dst instanceof net.Socket){
-				dst.destroy();
-			}
-		};
-		
-		process.on("uncaughtException", err => {
-			console.error(err);
-			close();
-		});
-		
 		const origDest = original(src);
-		const route = `${src.remoteAddress}:${src.remotePort} -> ${origDest.host}:${origDest.port}`;
 		if(
 			conf.allowPorts != null && !conf.allowPorts.some(port => port == origDest.port) ||
 			conf.allowAddress != null && !conf.allowAddress.some(addr => addr == origDest.host)
 		){
-			console.log("NG", route);
-			close();
+			console.log(`DENY ${src.remoteAddress}:${src.remotePort} -> ${origDest.host}:${origDest.port}`);
+			src.destroy();
 			return;
 		}
 		
-		dst = net.connect(origDest, _ => {
+		const dst = net.connect(origDest, _ => {
+			const close = _ => {
+				src.destroy();
+				dst.destroy();
+			};
 			src.on("end", close);
 			dst.on("end", close);
 			src.on("data", data => dst.write(data));
 			dst.on("data", data => src.write(data));
-			console.log("OK", route);
 		});
 	}).listen(conf.listen);
 }
