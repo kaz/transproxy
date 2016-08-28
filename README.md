@@ -12,8 +12,22 @@ npm i -g transproxy
 
 ## launch
 
+### listen on specified port
+
 ```
-transproxy
+transproxy '{"listen":14514}'
+```
+
+### allow only http(s)
+
+```
+transproxy '{"allowPorts":[80,443]}'
+```
+
+### allow specific server
+
+```
+transproxy '{"allowAddress":["8.8.8.8"]}'
 ```
 
 ## routing
