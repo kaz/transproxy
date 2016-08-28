@@ -1,0 +1,23 @@
+{
+  "name": "transproxy",
+  "version": "1.0.1",
+  "description": "TCP transparent proxy",
+  "license": "MIT",
+  "author": {
+    "name": "Kazuki Sawada",
+    "email": "kazuki@6715.jp",
+    "url": "http://narusejun.com"
+  },
+  "bin": {
+    "transproxy": "./transproxy.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kazsw/transproxy.git"
+  },
+  "scripts": {
+    "install": "node-gyp rebuild"
+  },
+  "os": ["linux"],
+  "gypfile": true
+}
