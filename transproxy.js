@@ -42,14 +42,8 @@ if(cluster.isMaster){
 		}
 		
 		const dst = net.connect(origDest, _ => {
-			const close = _ => {
-				src.destroy();
-				dst.destroy();
-			};
-			src.on("end", close);
-			dst.on("end", close);
-			src.on("data", data => dst.write(data));
-			dst.on("data", data => src.write(data));
+			src.pipe(dst);
+			dst.pipe(src);
 		});
 	}).listen(conf.listen);
 }
